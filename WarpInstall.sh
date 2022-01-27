@@ -3,7 +3,7 @@ curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --ou
 osVersion=`lsb_release -cs`
 case $osVersion in
     focal|xenial|bullseye|buster|sketch) echo $osVersion is good to go;;
-    *)    echo choose from focal, xenial, bullseye, buster, or sketch; read osVersion;;
+    *)    osVersion="bullseye";;
 esac
 echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ '"$osVersion"' main' | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
 sudo apt update
