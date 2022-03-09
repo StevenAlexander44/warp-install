@@ -1,9 +1,9 @@
-sudo apt update
-curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-osVersion="bullseye"
-echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ '"$osVersion"' main' | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-sudo apt update
-sudo apt install cloudflare-warp -y
-echo;echo;echo
-echo now you can use 'warp-cli register' to register \(only required once\)
-echo and use 'warp-cli connect' to connect
+sudo apt install wireguard openresolv
+curl -Lo wgcf $(curl -s https://api.github.com/repos/ViRb3/wgcf/releases/latest | grep "https.*linux_amd64" | cut -d : -f 2,3 | tr -d \")
+chmod u+x wgcf
+sudo mv wgcf /bin
+sudo -u root sh -c 'cd /etc/wireguard; printf "\n" | wgcf register && wgcf generate' &&
+sudo mv /etc/wireguard/wgcf-profile.conf /etc/wireguard/warp.conf &&
+wg-quick up warp &&
+wg-quick down warp &&
+echo wg-quick up warp
